@@ -127,4 +127,4 @@ Record actual execution results in `docs/VERIFICATION.md`. Save evidence in `scr
 
 ## Notes on assistance
 
-ChatGPT assisted with the fictional scenario, SQL drafts, revisions, tests and documentation. The reflection should describe the student's own understanding, changes and execution experience. This README does not claim that the expected test results have already been achieved.
+ChatGPT assisted with the fictional scenario, SQL drafts, revisions, tests and documentation. The reflection should describe my own understanding, changes and execution experience.
