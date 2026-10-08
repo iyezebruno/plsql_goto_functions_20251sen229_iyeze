@@ -88,10 +88,9 @@ Open each file, check the worksheet connection and press **F5**.
 1. Run `00_setup/create_tables.sql` once in a clean schema.
 2. Run A1, A2, A3 illegal, A3 fixed and A4 in that order.
 3. Create the functions by running B1, B2, B3, B4 and C1.
-4. Run `03_tests/check_compilation.sql`.
-5. Run `03_tests/test_functions.sql`.
-6. Run `03_tests/B5_functions_in_select.sql`.
-7. Run `03_tests/test_validate_payroll.sql`.
+4. Run `03_tests/test_functions.sql`.
+5. Run `03_tests/B5_functions_in_select.sql`.
+6. Run `03_tests/test_validate_payroll.sql`.
 
 A3 deliberately produces a compilation error. Its correction is a separate file. Other unexpected errors should be investigated before continuing.
 
@@ -99,24 +98,27 @@ For a readable B5 grid, execute its ALTER SESSION statement first, then select t
 
 If setup already succeeded, do not rerun it to update functions. Run the function files directly. CREATE OR REPLACE replaces functions with matching names in the connected schema, so keep this project separate from other assignments.
 
-## Check the results
+## Results and testing
 
-These are **expected outcomes**, not a record of a verified execution:
+The saved execution screenshots show:
 
-| Check | Expected outcome |
+| Program | Observed result |
 |---|---|
-| A2 and A4 | 8 standard, 1 review and 3 invalid salaries |
-| Corrected A3 | Inspect batch 1; Inspect batch 2 |
-| Compilation | Five VALID functions and no function error rows |
-| Function tests | 24 passes |
-| Payroll tests | 16 passes |
-| B5 | 12 payroll report rows |
+| A1 | +120 litres, -35 litres, target met and one missing reading |
+| A2 and A4 | Matching totals: 8 standard, 1 review and 3 invalid salaries |
+| A3 | The original example fails; the correction prints Inspect batch 1 and Inspect batch 2 |
+| B5, worker 501 | Annual RWF 4,320,000; service 5 years; tax RWF 25,200; net RWF 334,800; VALID |
+| C1 tests | 16 payroll tests passed, including the combined-error test |
+
+The function test script contains 24 checks covering calculations, boundaries, missing inputs and expected exceptions. A successful run ends with `Function tests passed: 24`. The full B5 report is expected to contain 12 records.
+
+Each function file includes SHOW ERRORS so compilation messages can be checked immediately after creation.
 
 Tests compare returned values with expected answers. A PASS line containing INVALID means the validator correctly rejected the test record.
 
 The final payroll test temporarily gives worker 501 three problems and checks that all three are reported. It rolls back those changes on success or failure. The validator itself only reads data.
 
-Record actual execution results in `docs/VERIFICATION.md`. Save evidence in `screenshots/` as:
+Execution evidence is stored in `screenshots/` using these filenames:
 
 - A1_output.png
 - A2_output.png
@@ -127,4 +129,4 @@ Record actual execution results in `docs/VERIFICATION.md`. Save evidence in `scr
 
 ## Notes on assistance
 
-ChatGPT assisted with the fictional scenario, SQL drafts, revisions, tests and documentation. The reflection should describe my own understanding, changes and execution experience.
+ChatGPT assisted with the fictional scenario, SQL drafts, revisions, tests and documentation. The reflection discusses the program concepts and design decisions. The results table above records the outcomes visible in the execution screenshots; other test counts are identified as expected results.
